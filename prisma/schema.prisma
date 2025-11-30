@@ -1,0 +1,76 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["omitApi", "driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  name      String?
+  role      String   @default("USER") // ADMIN, USER
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Order {
+  id           Int      @id @default(autoincrement())
+  clientName   String
+  product      String
+  quantity     Float
+  status       String   @default("PENDING") // PENDING, PROCESSING, PREPARATION, COMPLETED
+  priority     String   @default("NORMAL") // LOW, NORMAL, HIGH
+  deliveryDate DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model ProductionEvent {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  startDate   DateTime
+  endDate     DateTime
+  type        String // SEEDING, GROWTH, HARVEST, PROCESSING, MAINTENANCE
+  status      String   @default("SCHEDULED") // SCHEDULED, IN_PROGRESS, COMPLETED, CANCELLED
+  alertLevel  String   @default("NONE") // NONE, LOW, MEDIUM, HIGH
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Species {
+  id             Int      @id @default(autoincrement())
+  name           String
+  scientificName String?
+  description    String?
+  cycleDays      Int
+  yieldPercent   Float
+  tempRange      String
+  phRange        String
+  usage          String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Formula {
+  id        Int      @id @default(autoincrement())
+  name      String
+  nutrients String
+  dose      String
+  frequency String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SystemConfig {
+  id              Int      @id @default(autoincrement())
+  maintenanceMode Boolean  @default(false)
+  autoBackup      Boolean  @default(false)
+  emailNotifs     Boolean  @default(true)
+  extendedHistory Boolean  @default(false)
+  updatedAt       DateTime @updatedAt
+}
