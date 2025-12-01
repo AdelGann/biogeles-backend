@@ -2,6 +2,10 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@n
 import { AdminService } from './admin.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
+import { CreateUserDto } from './dto/create-user.dto';
+import { CreateSpeciesDto } from './dto/create-species.dto';
+import { CreateFormulaDto } from './dto/create-formula.dto';
+import { UpdateConfigDto } from './dto/update-config.dto';
 
 @ApiTags('admin')
 @ApiBearerAuth()
@@ -24,7 +28,7 @@ export class AdminController {
 
     @Post('users')
     @ApiOperation({ summary: 'Create a user' })
-    createUser(@Body() data: any) {
+    createUser(@Body() data: CreateUserDto) {
         return this.adminService.createUser(data);
     }
 
@@ -42,7 +46,7 @@ export class AdminController {
 
     @Post('species')
     @ApiOperation({ summary: 'Create a species' })
-    createSpecies(@Body() data: any) {
+    createSpecies(@Body() data: CreateSpeciesDto) {
         return this.adminService.createSpecies(data);
     }
 
@@ -60,7 +64,7 @@ export class AdminController {
 
     @Post('formulas')
     @ApiOperation({ summary: 'Create a formula' })
-    createFormula(@Body() data: any) {
+    createFormula(@Body() data: CreateFormulaDto) {
         return this.adminService.createFormula(data);
     }
 
@@ -78,7 +82,7 @@ export class AdminController {
 
     @Patch('config')
     @ApiOperation({ summary: 'Update system config' })
-    updateConfig(@Body() data: any) {
+    updateConfig(@Body() data: UpdateConfigDto) {
         return this.adminService.updateConfig(data);
     }
 }
