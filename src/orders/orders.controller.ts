@@ -18,7 +18,7 @@ import { CreateOrderDto, UpdateOrderDto } from './dto/order.dto';
 @Controller('orders')
 @UseGuards(JwtAuthGuard)
 export class OrdersController {
-  constructor(private readonly ordersService: OrdersService) {}
+  constructor(private readonly ordersService: OrdersService) { }
 
   @Get()
   @ApiOperation({ summary: 'List all orders' })
@@ -52,7 +52,7 @@ export class OrdersController {
 
   @Delete(':id')
   @ApiOperation({ summary: `Delete Order ` })
-  deleteOrder(@Param(`id`) id: number) {
-    return this.ordersService.delete(id);
+  deleteOrder(@Param(`id`) id: string) {
+    return this.ordersService.delete(+id);
   }
 }

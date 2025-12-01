@@ -21,7 +21,7 @@ import {
 @Controller('production')
 @UseGuards(JwtAuthGuard)
 export class ProductionController {
-  constructor(private readonly productionService: ProductionService) {}
+  constructor(private readonly productionService: ProductionService) { }
 
   @Get('events')
   @ApiOperation({ summary: 'List production events' })
@@ -48,7 +48,7 @@ export class ProductionController {
 
   @Delete(`events/:id`)
   @ApiOperation({ summary: `Delete a production event` })
-  delete(@Param(`id`) id: number) {
-    return this.productionService.delete(id);
+  delete(@Param(`id`) id: string) {
+    return this.productionService.delete(+id);
   }
 }
