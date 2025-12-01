@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { AdminService } from './admin.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
@@ -16,6 +16,24 @@ export class AdminController {
         return this.adminService.getStats();
     }
 
+    @Get('users')
+    @ApiOperation({ summary: 'List all users' })
+    findAllUsers() {
+        return this.adminService.findAllUsers();
+    }
+
+    @Post('users')
+    @ApiOperation({ summary: 'Create a user' })
+    createUser(@Body() data: any) {
+        return this.adminService.createUser(data);
+    }
+
+    @Delete('users/:id')
+    @ApiOperation({ summary: 'Delete a user' })
+    deleteUser(@Param('id') id: string) {
+        return this.adminService.deleteUser(+id);
+    }
+
     @Get('species')
     @ApiOperation({ summary: 'List all species' })
     findAllSpecies() {
@@ -28,6 +46,12 @@ export class AdminController {
         return this.adminService.createSpecies(data);
     }
 
+    @Delete('species/:id')
+    @ApiOperation({ summary: 'Delete a species' })
+    deleteSpecies(@Param('id') id: string) {
+        return this.adminService.deleteSpecies(+id);
+    }
+
     @Get('formulas')
     @ApiOperation({ summary: 'List all formulas' })
     findAllFormulas() {
@@ -38,6 +62,12 @@ export class AdminController {
     @ApiOperation({ summary: 'Create a formula' })
     createFormula(@Body() data: any) {
         return this.adminService.createFormula(data);
+    }
+
+    @Delete('formulas/:id')
+    @ApiOperation({ summary: 'Delete a formula' })
+    deleteFormula(@Param('id') id: string) {
+        return this.adminService.deleteFormula(+id);
     }
 
     @Get('config')
